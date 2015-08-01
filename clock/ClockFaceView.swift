@@ -99,47 +99,27 @@ let π:CGFloat = CGFloat(M_PI)
     }
     
     
-    func drawHourLabels(rect: CGRect) {
-       
-//        var testLabel = UILabel(frame: CGRectMake(rect.width/2, rect.height/2, 75, 75))
-//        
-//        testLabel.textAlignment = NSTextAlignment.Center
-//        
-//        var radius:Float = 170.0
-//        
-//        testLabel.center = CGPointMake(rect.width / 2, ((rect.height/2.0) - radius))
-//        testLabel.font = UIFont(name: testLabel.font.fontName, size: 38)
-//        testLabel.text = "12"
-//        
-//        self.addSubview(testLabel)
-        
-//        let labelSize:CFFloat =
-//        
-//        var context = UIGraphicsGetCurrentContext()
-//        
-//        // save original state
-//        CGContextSaveGState(context)
-//        
-//        CGContextTranslateCTM(context, rect.width/2, rect.height/2)
-//        var arcLengthPerGlass = π/30
-//        
-//        for i in 1...60 {
-//            
-//            var angle = arcLengthPerGlass * CGFloat(i) - π/2
-//            
-//            if (i%5 == 0) {
-//                CGContextTranslateCTM(context,
-//                    0, ((rect.height/2) - (rect.height * 0.1235)) - hourSize)
-//                hourPath.fill()
-//                
-//            }
-//        }
+    func drawHourLabels(rect: CGRect) {       
+        var radius:CGFloat = 170.0
+        var numLabel = [UILabel]()
+
+        for i in 0...11 {
+            numLabel.append(UILabel(frame: CGRectMake(rect.width/2, rect.height/2, 75, 75)))
+            numLabel[i].textAlignment = NSTextAlignment.Center
+            numLabel[i].font = UIFont(name: numLabel[i].font.fontName, size: 38)
+            numLabel[i].text = String(i+1)
+            
+            var angle = CGFloat((Double(i-2) * M_PI) / 6)
+            numLabel[i].center = CGPoint(x: Double(rect.width/2 + cos(angle) * radius), y: Double(rect.height/2 + sin(angle) * radius))
+            
+            self.addSubview(numLabel[i])
+            
+        }
+
         
     }
     
     override func drawRect(rect: CGRect) {
-        
-        
         
         drawFrame(rect)
         drawTicks(rect)
