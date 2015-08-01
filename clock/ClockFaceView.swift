@@ -98,15 +98,15 @@ let π:CGFloat = CGFloat(M_PI)
         
     }
     
-    
-    func drawHourLabels(rect: CGRect) {       
-        var radius:CGFloat = 170.0
+    //scale font size and radius
+    func drawHourLabels(rect: CGRect) {
+        var radius:CGFloat = 170
         var numLabel = [UILabel]()
 
         for i in 0...11 {
             numLabel.append(UILabel(frame: CGRectMake(rect.width/2, rect.height/2, 75, 75)))
             numLabel[i].textAlignment = NSTextAlignment.Center
-            numLabel[i].font = UIFont(name: numLabel[i].font.fontName, size: 38)
+            numLabel[i].font = UIFont(name: numLabel[i].font.fontName, size: 34)
             numLabel[i].text = String(i+1)
             
             var angle = CGFloat((Double(i-2) * M_PI) / 6)
@@ -115,7 +115,53 @@ let π:CGFloat = CGFloat(M_PI)
             self.addSubview(numLabel[i])
             
         }
-
+    }
+    func drawHands(rect: CGRect) {
+        var context = UIGraphicsGetCurrentContext()
+        
+        // save original state
+        CGContextSaveGState(context)
+        
+        // colors
+        var strokeColor1: UIColor = UIColor.lightGrayColor()
+        
+        var strokeColor2: UIColor = UIColor.redColor()
+        strokeColor2.setFill()
+        
+        var strokeColor3: UIColor = UIColor.blueColor()
+        strokeColor3.setFill()
+        
+        // second hand
+        var secondHandWidth:CGFloat = (rect.height * 0.0068)
+        var secondHandSize:CGFloat = (rect.height * 0.31)
+        
+        // the marker is positioned in top left
+        var secondHandPath = UIBezierPath(rect: CGRect(x: -secondHandWidth/2, y: 0,
+            width: secondHandWidth, height: secondHandSize))
+        
+        // minute hand
+        var minuteHandWidth:CGFloat = (rect.height * 0.0125)
+        var minuteHandSize:CGFloat = (rect.height * 0.33)
+        
+        // the marker is positioned in top left
+        var minuteHandPath = UIBezierPath(rect: CGRect(x: -minuteHandWidth/2, y: 0,
+            width: minuteHandWidth, height: minuteHandSize))
+        
+        // hour hand
+        var hourHandWidth:CGFloat = (rect.height * 0.020)
+        var hourHandSize:CGFloat = (rect.height * 0.25)
+        
+        var hourHandPath = UIBezierPath(rect: CGRect(x: -hourHandWidth/2, y: 0, width: hourHandWidth,height: hourHandSize))
+        
+        strokeColor3.setFill()
+        hourHandPath.fill()
+        
+        strokeColor2.setFill()
+        minuteHandPath.fill()
+        
+        strokeColor1.setFill()
+        secondHandPath.fill()
+        
         
     }
     
@@ -124,6 +170,7 @@ let π:CGFloat = CGFloat(M_PI)
         drawFrame(rect)
         drawTicks(rect)
         drawHourLabels(rect)
+        drawHands(rect)
         
     }
 }
