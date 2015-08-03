@@ -10,38 +10,30 @@ import Foundation
 import UIKit
 
 let π:CGFloat = CGFloat(M_PI)
-@IBDesignable class ClockFaceView : UIView {
+class ClockFaceView : UIView {
     
-    @IBInspectable var fillColor: UIColor = UIColor.greenColor()
-    
-    func drawFrame(rect: CGRect) {
-        let center = CGPoint(x:rect.width/2, y: rect.height/2)
-        
-        let radius: CGFloat = (max(rect.width, rect.height) / 2)
-        
+    func drawFrame() {
+        let center = CGPoint(x:bounds.width/2, y: bounds.height/2)
+        let radius: CGFloat = (max(bounds.width, bounds.height) / 2)
         let arcWidth: CGFloat = 0
-        
         let startAngle: CGFloat = 0
         let endAngle: CGFloat = 2*π
         
-        var path = UIBezierPath(arcCenter: center, radius: radius-(rect.height * 0.083),startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        let path = UIBezierPath(arcCenter: center, radius: radius-(bounds.height * 0.083),startAngle: startAngle, endAngle: endAngle, clockwise: true)
         
-        var strokeColor: UIColor = UIColor.blackColor()
-        
+        let strokeColor: UIColor = UIColor.blackColor()
         path.lineWidth = arcWidth
-        
         strokeColor.setStroke()
-        path.lineWidth = (rect.height * 0.083)
+        path.lineWidth = (bounds.height * 0.083)
         path.stroke()
-        var fillColor: UIColor = UIColor.whiteColor()
+        
+        let fillColor: UIColor = UIColor.whiteColor()
         fillColor.setFill()
         path.fill()
-        
     }
     
-    func drawTicks(rect: CGRect) {
-        
-        var context = UIGraphicsGetCurrentContext()
+    func drawTicks() {
+        let context = UIGraphicsGetCurrentContext()
         
         // save original state
         CGContextSaveGState(context)
@@ -49,26 +41,24 @@ let π:CGFloat = CGFloat(M_PI)
         strokeColor1.setFill()
         
         // minute ticks
-        var minuteWidth:CGFloat = (rect.height * 0.0125)
-        var minuteSize:CGFloat = (rect.height * 0.025)
+        var minuteWidth:CGFloat = (bounds.height * 0.0125)
+        var minuteSize:CGFloat = (bounds.height * 0.025)
         
-        // the marker is positioned in top left
         var minutePath = UIBezierPath(rect: CGRect(x: -minuteWidth/2, y: 0,
             width: minuteWidth, height: minuteSize))
         
         // hour ticks
-        var hourWidth:CGFloat = (rect.height * 0.020)
-        var hourSize:CGFloat = (rect.height * 0.0333)
+        var hourWidth:CGFloat = (bounds.height * 0.020)
+        var hourSize:CGFloat = (bounds.height * 0.0333)
         
         var hourPath = UIBezierPath(rect: CGRect(x: -hourWidth/2, y: 0, width: hourWidth,height: hourSize))
         
-        
         // move context to the center position
-        CGContextTranslateCTM(context, rect.width/2, rect.height/2)
+        CGContextTranslateCTM(context, bounds.width/2, bounds.height/2)
         
         var arcLengthPerGlass = π/30
         
-        // minute ticks
+        // ticks
         for i in 1...60 {
             // save the centred context
             CGContextSaveGState(context)
@@ -82,95 +72,38 @@ let π:CGFloat = CGFloat(M_PI)
             // translate and fill with hour tick
             if (i%5 == 0) {
                 CGContextTranslateCTM(context,
-                    0, ((rect.height/2) - (rect.height * 0.1235)) - hourSize)
+                    0, ((bounds.height/2) - (bounds.height * 0.1235)) - hourSize)
                 hourPath.fill()
-                
             } // translate and fill with minute tick
             else {
                 CGContextTranslateCTM(context,
-                    0, ((rect.height/2) - (rect.height * 0.116)) - hourSize)
+                    0, ((bounds.height/2) - (bounds.height * 0.116)) - hourSize)
                 minutePath.fill()
             }
-            
             // restore the centred context for the next rotate
             CGContextRestoreGState(context)
         }
-        
     }
     
-    //scale font size and radius
-    func drawHourLabels(rect: CGRect) {
-        var radius:CGFloat = 170
+    func drawHourLabels() {
+        var radius:CGFloat = (bounds.width/2 * 0.6 )
         var numLabel = [UILabel]()
 
         for i in 0...11 {
-            numLabel.append(UILabel(frame: CGRectMake(rect.width/2, rect.height/2, 75, 75)))
+            numLabel.append(UILabel(frame: CGRectMake(bounds.width/2, bounds.height/2, 75, 75)))
             numLabel[i].textAlignment = NSTextAlignment.Center
-            numLabel[i].font = UIFont(name: numLabel[i].font.fontName, size: 34)
+            numLabel[i].font = UIFont(name: numLabel[i].font.fontName, size: bounds.width/2 * 0.13)
             numLabel[i].text = String(i+1)
             
             var angle = CGFloat((Double(i-2) * M_PI) / 6)
-            numLabel[i].center = CGPoint(x: Double(rect.width/2 + cos(angle) * radius), y: Double(rect.height/2 + sin(angle) * radius))
+            numLabel[i].center = CGPoint(x: Double(bounds.width/2 + cos(angle) * radius), y: Double(bounds.height/2 + sin(angle) * radius))
             
             self.addSubview(numLabel[i])
-            
         }
     }
-    func drawHands(rect: CGRect) {
-        var context = UIGraphicsGetCurrentContext()
-        
-        // save original state
-        CGContextSaveGState(context)
-        
-        // colors
-        var strokeColor1: UIColor = UIColor.lightGrayColor()
-        
-        var strokeColor2: UIColor = UIColor.redColor()
-        strokeColor2.setFill()
-        
-        var strokeColor3: UIColor = UIColor.blueColor()
-        strokeColor3.setFill()
-        
-        // second hand
-        var secondHandWidth:CGFloat = (rect.height * 0.0068)
-        var secondHandSize:CGFloat = (rect.height * 0.31)
-        
-        // the marker is positioned in top left
-        var secondHandPath = UIBezierPath(rect: CGRect(x: -secondHandWidth/2, y: 0,
-            width: secondHandWidth, height: secondHandSize))
-        
-        // minute hand
-        var minuteHandWidth:CGFloat = (rect.height * 0.0125)
-        var minuteHandSize:CGFloat = (rect.height * 0.33)
-        
-        // the marker is positioned in top left
-        var minuteHandPath = UIBezierPath(rect: CGRect(x: -minuteHandWidth/2, y: 0,
-            width: minuteHandWidth, height: minuteHandSize))
-        
-        // hour hand
-        var hourHandWidth:CGFloat = (rect.height * 0.020)
-        var hourHandSize:CGFloat = (rect.height * 0.25)
-        
-        var hourHandPath = UIBezierPath(rect: CGRect(x: -hourHandWidth/2, y: 0, width: hourHandWidth,height: hourHandSize))
-        
-        strokeColor3.setFill()
-        hourHandPath.fill()
-        
-        strokeColor2.setFill()
-        minuteHandPath.fill()
-        
-        strokeColor1.setFill()
-        secondHandPath.fill()
-        
-        
-    }
-    
     override func drawRect(rect: CGRect) {
-        
-        drawFrame(rect)
-        drawTicks(rect)
-        drawHourLabels(rect)
-        drawHands(rect)
-        
+        drawFrame()
+        drawTicks()
+        drawHourLabels()
     }
 }

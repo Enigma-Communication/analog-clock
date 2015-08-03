@@ -18,23 +18,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDR-Vv-Ejx" customClass="ClockFaceView" customModule="clock" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="-1" width="600" height="601"/>
+                                <rect key="frame" x="150" y="150" width="300" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="600" id="Qj1-8a-hsq"/>
-                                    <constraint firstAttribute="height" constant="600" id="u4w-mZ-IMa"/>
+                                    <constraint firstAttribute="width" constant="300" id="MTZ-sM-dzS"/>
+                                    <constraint firstAttribute="height" constant="300" id="YJn-pP-u6b"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="eDR-Vv-Ejx" secondAttribute="centerX" id="1rw-VA-zxj"/>
-                            <constraint firstAttribute="centerY" secondItem="eDR-Vv-Ejx" secondAttribute="centerY" id="GFI-f5-Zsf"/>
+                            <constraint firstAttribute="centerY" secondItem="eDR-Vv-Ejx" secondAttribute="centerY" id="GYx-WZ-yuH"/>
+                            <constraint firstAttribute="centerX" secondItem="eDR-Vv-Ejx" secondAttribute="centerX" id="bxM-R4-exQ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="myClock" destination="eDR-Vv-Ejx" id="684-ke-Yb2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="165" y="156"/>
         </scene>
     </scenes>
 </document>
