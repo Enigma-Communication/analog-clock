@@ -52,7 +52,7 @@ class ClockViewController: UIViewController {
         hourLayer.path = hourHandPath.CGPath
         hourLayer.lineWidth = hourHandWidth
         hourLayer.lineCap = kCALineCapButt
-        hourLayer.strokeColor = UIColor.redColor().CGColor
+        hourLayer.strokeColor = UIColor.blackColor().CGColor
         hourLayer.rasterizationScale = UIScreen.mainScreen().scale;
         hourLayer.shouldRasterize = true
         newView.layer.addSublayer(hourLayer)
@@ -76,7 +76,7 @@ class ClockViewController: UIViewController {
         secondLayer.path = secondHandPath.CGPath
         secondLayer.lineWidth = secondHandWidth
         secondLayer.lineCap = kCALineCapButt
-        secondLayer.strokeColor = UIColor.blackColor().CGColor
+        secondLayer.strokeColor = UIColor.redColor().CGColor
         secondLayer.rasterizationScale = UIScreen.mainScreen().scale;
         secondLayer.shouldRasterize = true
         newView.layer.addSublayer(secondLayer)
