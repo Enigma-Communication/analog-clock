@@ -162,14 +162,18 @@
 		21ADF1631B6C3C7B0092C5F3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = dsy;
 				TargetAttributes = {
 					21ADF16A1B6C3C7B0092C5F3 = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 0800;
 					};
 					21ADF17F1B6C3C7B0092C5F3 = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 21ADF16A1B6C3C7B0092C5F3;
 					};
 				};
@@ -353,6 +357,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -366,6 +371,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -384,6 +390,7 @@
 				INFOPLIST_FILE = clockTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clock.app/clock";
 			};
 			name = Debug;
@@ -399,6 +406,7 @@
 				INFOPLIST_FILE = clockTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clock.app/clock";
 			};
 			name = Release;

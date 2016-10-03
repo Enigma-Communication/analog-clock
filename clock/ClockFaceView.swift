@@ -21,13 +21,13 @@ class ClockFaceView : UIView {
         
         let path = UIBezierPath(arcCenter: center, radius: radius-(bounds.height * 0.083),startAngle: startAngle, endAngle: endAngle, clockwise: true)
         
-        let strokeColor: UIColor = UIColor.blackColor()
+        let strokeColor: UIColor = UIColor.black
         path.lineWidth = arcWidth
         strokeColor.setStroke()
         path.lineWidth = (bounds.height * 0.083)
         path.stroke()
         
-        let fillColor: UIColor = UIColor.whiteColor()
+        let fillColor: UIColor = UIColor.white
         fillColor.setFill()
         path.fill()
     }
@@ -36,72 +36,70 @@ class ClockFaceView : UIView {
         let context = UIGraphicsGetCurrentContext()
         
         // save original state
-        CGContextSaveGState(context)
-        var strokeColor1: UIColor = UIColor.blackColor()
+        context?.saveGState()
+        let strokeColor1: UIColor = UIColor.black
         strokeColor1.setFill()
         
         // minute ticks
-        var minuteWidth:CGFloat = (bounds.height * 0.0125)
-        var minuteSize:CGFloat = (bounds.height * 0.025)
+        let minuteWidth:CGFloat = (bounds.height * 0.0125)
+        let minuteSize:CGFloat = (bounds.height * 0.025)
         
-        var minutePath = UIBezierPath(rect: CGRect(x: -minuteWidth/2, y: 0,
+        let minutePath = UIBezierPath(rect: CGRect(x: -minuteWidth/2, y: 0,
             width: minuteWidth, height: minuteSize))
         
         // hour ticks
-        var hourWidth:CGFloat = (bounds.height * 0.020)
-        var hourSize:CGFloat = (bounds.height * 0.0333)
+        let hourWidth:CGFloat = (bounds.height * 0.020)
+        let hourSize:CGFloat = (bounds.height * 0.0333)
         
-        var hourPath = UIBezierPath(rect: CGRect(x: -hourWidth/2, y: 0, width: hourWidth,height: hourSize))
+        let hourPath = UIBezierPath(rect: CGRect(x: -hourWidth/2, y: 0, width: hourWidth,height: hourSize))
         
         // move context to the center position
-        CGContextTranslateCTM(context, bounds.width/2, bounds.height/2)
+        context?.translateBy(x: bounds.width/2, y: bounds.height/2)
         
-        var arcLengthPerGlass = π/30
+        let arcLengthPerGlass = π/30
         
         // ticks
         for i in 1...60 {
             // save the centred context
-            CGContextSaveGState(context)
+            context?.saveGState()
             
             // calculate the rotation angle
-            var angle = arcLengthPerGlass * CGFloat(i) - π/2
+            let angle = arcLengthPerGlass * CGFloat(i) - π/2
             
             //rotate and translate
-            CGContextRotateCTM(context, angle)
+            context?.rotate(by: angle)
             
             // translate and fill with hour tick
             if (i%5 == 0) {
-                CGContextTranslateCTM(context,
-                    0, ((bounds.height/2) - (bounds.height * 0.1235)) - hourSize)
+                context?.translateBy(x: 0, y: ((bounds.height/2) - (bounds.height * 0.1235)) - hourSize)
                 hourPath.fill()
             } // translate and fill with minute tick
             else {
-                CGContextTranslateCTM(context,
-                    0, ((bounds.height/2) - (bounds.height * 0.116)) - hourSize)
+                context?.translateBy(x: 0, y: ((bounds.height/2) - (bounds.height * 0.116)) - hourSize)
                 minutePath.fill()
             }
             // restore the centred context for the next rotate
-            CGContextRestoreGState(context)
+            context?.restoreGState()
         }
     }
     
     func drawHourLabels() {
-        var radius:CGFloat = (bounds.width/2 * 0.6 )
+        let radius:CGFloat = (bounds.width/2 * 0.6 )
         var numLabel = [UILabel]()
 
         for i in 0...11 {
-            numLabel.append(UILabel(frame: CGRectMake(bounds.width/2, bounds.height/2, 75, 75)))
-            numLabel[i].textAlignment = NSTextAlignment.Center
+            numLabel.append(UILabel(frame: CGRect(x: bounds.width/2, y: bounds.height/2, width: 75, height: 75)))
+            numLabel[i].textAlignment = NSTextAlignment.center
             numLabel[i].font = UIFont(name: numLabel[i].font.fontName, size: bounds.width/2 * 0.13)
             numLabel[i].text = String(i+1)
             
-            var angle = CGFloat((Double(i-2) * M_PI) / 6)
+            let angle = CGFloat((Double(i-2) * M_PI) / 6)
             numLabel[i].center = CGPoint(x: Double(bounds.width/2 + cos(angle) * radius), y: Double(bounds.height/2 + sin(angle) * radius))
             
             self.addSubview(numLabel[i])
         }
     }
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         drawFrame()
         drawTicks()
         drawHourLabels()
